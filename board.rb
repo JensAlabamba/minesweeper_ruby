@@ -18,11 +18,11 @@ class Board
     end
 
     def lost?
-        @grid.flatten.any? { |tile| tile.bombed? != explored? }
+        @grid.flatten.any? { |chunk| chunk.bombed? != chunk.explored? }
     end
 
     def won?
-        @grid.flatten.all? { |tile| tile.bombed? != tile.explored? }
+        @grid.flatten.all? { |chunk| chunk.bombed? != chunk.explored? }
     end
 
     def render(reveal = false)
