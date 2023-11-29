@@ -11,6 +11,8 @@ class Chunk
         [ 1,  1]
       ].freeze
 
+      attr_reader :pos
+
       def initialize(board, pos)
         @board = board
         @pos = pos
@@ -56,4 +58,27 @@ class Chunk
             neighboring_coord.map { |pos| @board[pos] }
         end
       end
+
+      def adjacent_bomb_count
+        neighbors.select(&:bombed?).count
+      end
+
+      def inspect
+        { pos: pos,
+          bombed: bombed?,
+          explored: explored?,
+          flagged: flagged?}.inspect
+      end
+
+      def render
+        if flagged? 
+            "F"
+        elsif explored?
+            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+        else
+            "B"
+        end
+      end
+
+      
 end
