@@ -29,5 +29,20 @@ class Chunk
         @explored
       end
 
-      
+      def plant_bomb
+        @bombed = true
+      end
+
+      def toggle_flag
+        @flagged = !@flagged unless @explored
+      end
+
+      def explore
+        return self if explored?
+        @explored = true 
+        if !bombed? && adjacent_bomb_count == 0
+            neighbors.each(&:explore)
+        end
+        self
+      end
 end
