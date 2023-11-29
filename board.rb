@@ -2,20 +2,18 @@ require_relative "chunk"
 
 class Board
 
-    def self.empty_grid
-        Array.new(9) do 
-            Arry.new(9) { Chunk.new(0) }
+    attr_reader :grid_size, :num_bombs
+
+    def initialize(grid_size, num_bombs)
+        @grid_size = grid_size
+        @num_bombs = num_bombs
+
+        create_board
+    end
+    
+    def create_board
+        @grid = Array.new(@grid_size) do |row|
+            Array.new(@grid_size) { |col| Chunk.new(self, [row, col]) }
         end
     end
-
-    def initialize(grid = self.empty_grid)
-        @grid = grid
-    end
-
-    def [](pos)
-        x, y = pos
-        grid[x][y]
-    end
-
-    
 end
