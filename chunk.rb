@@ -16,4 +16,18 @@ class Chunk
         @pos = pos
         @bombed , @flagged, @explored = false, false, false
       end
+
+      def bombed?
+        @bombed
+      end
+
+      def flagged?
+        @flagged
+      end
+
+      def explored?
+        @explored
+      end
+
+      
 end
