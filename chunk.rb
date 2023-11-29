@@ -45,4 +45,15 @@ class Chunk
         end
         self
       end
+
+      def neighbors
+        neighboring_coord = AROUND.map do |x, y|
+            [pos[0] + x, pos[1] + y]
+        end.select do |row, col|
+            [row, col].all? do |coord|
+                coord.between?(0, @board.grid_size - 1)
+            end
+            neighboring_coord.map { |pos| @board[pos] }
+        end
+      end
 end
