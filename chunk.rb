@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Chunk
     
     AROUND = [
@@ -49,14 +51,14 @@ class Chunk
       end
 
       def neighbors
-        neighboring_coord = AROUND.map do |x, y|
+        neighboring_coord = AROUND.map do |(x, y)|
             [pos[0] + x, pos[1] + y]
         end.select do |row, col|
             [row, col].all? do |coord|
                 coord.between?(0, @board.grid_size - 1)
             end
+          end
             neighboring_coord.map { |pos| @board[pos] }
-        end
       end
 
       def adjacent_bomb_count
@@ -71,12 +73,12 @@ class Chunk
       end
 
       def render
-        if flagged? 
-            "F"
+        if flagged?
+            "F".blue
         elsif explored?
-            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+            adjacent_bomb_count == 0 ? "_".green : adjacent_bomb_count.to_s.red
         else
-            "B"
+            "?"
         end
       end
 

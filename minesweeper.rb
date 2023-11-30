@@ -1,5 +1,6 @@
 require 'yaml'
 require_relative 'board'
+require 'colorize'
 
 class MinesweeperGame
   LAYOUTS = {
@@ -15,6 +16,11 @@ class MinesweeperGame
 
   def play
     until @board.won? || @board.lost?
+      puts "Type:
+      f to flag
+      e to explore
+      s to save
+      Input should be 'Action, row_idx, col_idx"
       puts @board.render
 
       action, pos = get_move

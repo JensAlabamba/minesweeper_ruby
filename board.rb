@@ -18,21 +18,38 @@ class Board
     end
 
     def lost?
-        @grid.flatten.any? { |chunk| chunk.bombed? != chunk.explored? }
+        @grid.flatten.any? { |chunk| chunk.bombed? && chunk.explored? }
     end
 
     def won?
         @grid.flatten.all? { |chunk| chunk.bombed? != chunk.explored? }
     end
 
-    def render(reveal = false)
-        @grid.map do |row|
-            row.map do |chunk|
-                reveal ? chunk.reveal : chunk.render
-            end.join("")
-        end.join("\n")
-    end
+    # def render(reveal = false)
+    #     @grid.map do |row|
+    #         row.map do |chunk|
+    #             reveal ? chunk.reveal : chunk.render
+    #         end.join("")
+    #     end.join("\n")
+    # end
 
+    def render(reveal = false)
+        # Add column indices
+        column_indices = (0...@grid_size).to_a.join(" ")
+        rendered_board = "  #{column_indices}\n"
+    
+        # Add row indices and board content
+        @grid.each_with_index do |row, row_index|
+          row_content = row.map do |chunk|
+            reveal ? chunk.reveal : chunk.render
+          end.join(" ")
+    
+          rendered_board += "#{row_index} #{row_content}\n"
+        end
+    
+        rendered_board
+      end
+      
     def reveal
         render(true)
     end
